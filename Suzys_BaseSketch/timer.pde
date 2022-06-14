@@ -1,3 +1,8 @@
+/*
+ TIMER TAB
+ In this tab the timer bar is generated
+ */
+ 
 class Timer { 
   float time = 0;
   float mod;
@@ -11,9 +16,6 @@ class Timer {
   }
 
   void render(int initNum) {
-    //if(currentNumber == 1){
-    //  mod = 1;
-    //}
     if (currentNumber != initNum) {
       time = 0;
       if (mod >= 15) {
@@ -29,6 +31,17 @@ class Timer {
     rect(0, height-60, width-time, 60);
     time+=mod;
     currentNumber = initNum;
+  }
+
+  boolean timeUp () {
+    boolean result = false;
+    if (time >= width) {
+      result = true;
+      myMovie.jump(0);
+    } else {
+      result = false;
+    }
+    return result;
   }
 
   void update(int x, int y, float w, float h, color c1, color c2) {

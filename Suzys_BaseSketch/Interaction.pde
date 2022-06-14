@@ -1,6 +1,5 @@
-/**
- Interaction Tab
- 
+/*
+ INTERACTION TAB
  In this tab all the interactions with the outside world
  */
 

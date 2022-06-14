@@ -1,3 +1,8 @@
+/*
+ SOCIALSCORE TAB
+ In this tab the value for social score will be calculated
+ */
+
 class SocialScore {
   int score;
   int resetScore;
@@ -9,14 +14,14 @@ class SocialScore {
   }
 
   void update(boolean answer) {
-    if (imageNum == 7) {
+    if (imageNum == 6) {
       if (answer) {
         score+= random(10, 20);
       } else {
         score -= random(10, 20);
       }
     }
-    if (imageNum == 8) {
+    if (imageNum == 7) {
       if (answer) {
         universityDegree = true;
         score += random(50, 60);

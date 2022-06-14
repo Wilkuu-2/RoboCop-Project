@@ -1,3 +1,8 @@
+/*
+ ARDUINO TAB
+ In this tab all functions for communication with arduino
+ */
+
 class Arduino {
   private Serial port;
   boolean prevStart = false;
