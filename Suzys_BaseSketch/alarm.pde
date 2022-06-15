@@ -34,6 +34,7 @@ class Alarm {
 
         case(2):
         image(cursedIDMovie, 0, 0);
+        image(video,261,173,230,230);
         break;
       }
       update();

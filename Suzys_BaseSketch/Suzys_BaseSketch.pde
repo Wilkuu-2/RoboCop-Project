@@ -9,6 +9,8 @@ IDtag idTag;
 Question[] questions;
 SocialScore socialScore;
 Timer timer;
+Webcam camera;
+Capture video;
 
 int imageNum = 0;
 int MAX_IMAGENUM = 39;
@@ -48,7 +50,14 @@ void setup() {
   }
   socialScore = new SocialScore(700);
   timer = new Timer();
+  
+  video = new Capture(this, 230, 230);
+  video.start();
 } 
+
+void captureEvent(Capture video){
+  video.read();
+}
 
 
 void draw() { 
@@ -100,6 +109,7 @@ void draw() {
     image(myMovie, 0, 0);
     idTag.update(socialScore.score);
     idTag.render();
+    image(video,261,173,230,230);
     break;
 
     // alarm question
@@ -107,6 +117,7 @@ void draw() {
     resetMovieTest(alarmMovie, 5.0);
     resetMovieTest(cursedIDMovie, 22.5);
     alarm.render(timer.timeUp());
+    
     break;
   }
   // temporary
