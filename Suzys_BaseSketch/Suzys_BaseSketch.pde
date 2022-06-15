@@ -51,7 +51,7 @@ void setup() {
   socialScore = new SocialScore(700);
   timer = new Timer();
   
-  video = new Capture(this, 230, 230);
+  video = new Capture(this, 640, 480, cameras[1]);
   video.start();
 } 
 
