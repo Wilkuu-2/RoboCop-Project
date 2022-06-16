@@ -27,11 +27,11 @@ void setup() {
   fullScreen();
 
   // initialize movie for ID tag
-  myMovie = new Movie(this, "videoyay.mp4");
+  myMovie = new Movie(this, "ID_tag_display_2.mp4");
   myMovie.loop();
   
   // initialize movies for alarm
-  alarmMovie = new Movie(this, "alarm.mp4");
+  alarmMovie = new Movie(this, "alarm2.mp4");
   cursedIDMovie = new Movie(this, "cursedID.mp4");
   cursedIDMovie.loop();
   alarmMovie.loop();
@@ -51,7 +51,8 @@ void setup() {
   socialScore = new SocialScore(700);
   timer = new Timer();
   
-  video = new Capture(this, 640, 480, cameras[1]);
+  String[] cameras = Capture.list();
+  video = new Capture(this, 1280, 960, cameras[0]);
   video.start();
 } 
 
@@ -109,7 +110,7 @@ void draw() {
     image(myMovie, 0, 0);
     idTag.update(socialScore.score);
     idTag.render();
-    image(video,261,173,230,230);
+    copy(video,350, 0, 483, 640, 108, 220, 483, 640);
     break;
 
     // alarm question
