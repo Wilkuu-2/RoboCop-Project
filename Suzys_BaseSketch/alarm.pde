@@ -10,6 +10,8 @@ class Alarm {
   int resetValue;
   int userAnswer;
   boolean oneMistake;
+  boolean alarmShouldChange = false;
+  boolean alarmState = false;
 
   Alarm(int initTimerValue) {
     alarmQuestion = loadImage("alarm.png");
@@ -23,20 +25,26 @@ class Alarm {
   void render(boolean timeIsUp) {
     if (timeIsUp) {
       switch (alarmDisplay) {
+        // alarm
         case(0):
         image(alarmMovie, 0, 0);
         timerCountdown();
+        alarmShouldChange = true;
         break;
 
-        case(1):
+        // question
+        case(1):    
+        file.stop();
         image(alarmQuestion, 0, 0);
         break;
-
+        
+        // cursed ID display
         case(2):
+        alarmShouldChange = false;
         image(cursedIDMovie, 0, 0);
-        image(video,261,173,230,230);
         break;
       }
+      soundUpdate();
       update();
     }
   }
@@ -70,10 +78,24 @@ class Alarm {
     displayZeroTimer = resetValue;
     userAnswer = 3;
     timer.time = 0;
+    file.stop();
+    file2.stop();
   }
 
-  // 
   void timerCountdown() {
     displayZeroTimer--;
+  }
+
+  void soundUpdate() {
+    if (alarmState != alarmShouldChange) {
+      if (alarmShouldChange) {
+        file2.stop();
+        file.play();
+      } else {
+        file.stop();
+        file2.play();
+      }
+    }
+    alarmState = alarmShouldChange;
   }
 }

@@ -39,56 +39,56 @@ class SocialScore {
         }
       }
     }
-    if (imageNum == 10) {
+    if (imageNum == 14) {
       if (answer) {
         score -= random(20, 50);
       } else {
         score += 20;
       }
     }
-    if (imageNum == 11) {
+    if (imageNum == 16) {
       if (answer) {
-        score += random(30, 40);
-      } else {
         score -= random(30, 40);
-      }
-    }
-    if (imageNum == 12) {
-      if (answer) {
-        score -= 200;
       } else {
-        score += random(5, 15);
+        score += random(30, 40);
       }
     }
-    if (imageNum == 13) {
+    if (imageNum == 17) {
+      if (answer) {
+        score += random(5, 15);
+      } else {
+        score -= 200;
+      }
+    }
+    if (imageNum == 21) {
       if (answer) {
         score -= random(90, 100);
       } else {
         score += random(90, 100);
       }
     }
-    if (imageNum == 14) {
+    if (imageNum == 22) {
       if (answer) {
         score += random(50, 60);
       } else {
         score -= random(50, 60);
       }
     }
-    if (imageNum == 15) {
+    if (imageNum == 24) {
       if (answer) {
         score += random(5, 15);
       } else {
         score -= 250;
       }
     }
-    if (imageNum == 16) {
+    if (imageNum == 25) {
       if (answer) {
         score -= random(70, 80);
       } else {
         score += random(70, 80);
       }
     }
-    if (imageNum == 17) {
+    if (imageNum == 28) {
       if (answer) {
         score += random(15, 25);
       } else {

@@ -19,6 +19,10 @@ class TestInteractible implements Interactible {
       caseTimer = 0;
       alarm.reset();
       alarm.oneMistake = false;
+      idTag.hasOccupation = false;
+      idTag.infoValue = 0;
+      file.stop();
+      file2.stop();
     }
     println("[TEST] Started:" + isOn);
   }
@@ -29,9 +33,13 @@ class TestInteractible implements Interactible {
     if (started) {
       if (caseValue == 0) {
         socialScore.update(true);
+        idTag.citizenNumUpdate(true);
+        idTag.generalInfoUpdate(true);
         imageNum++;
       } else if (caseValue == 3 && alarm.alarmDisplay == 1) {
         alarm.userAnswer = 1;
+        alarm.alarmShouldChange = false;
+        alarm.alarmState = false;
       }
     }
   }
@@ -42,6 +50,8 @@ class TestInteractible implements Interactible {
     if (started) {
       if (caseValue == 0) {
         socialScore.update(false);
+        idTag.citizenNumUpdate(false);
+        idTag.generalInfoUpdate(false);
         imageNum++;
       } else if (caseValue == 3 && alarm.alarmDisplay == 1) {
         alarm.userAnswer = 2;

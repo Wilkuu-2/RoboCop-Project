@@ -2,7 +2,7 @@
  TIMER TAB
  In this tab the timer bar is generated
  */
- 
+
 class Timer { 
   float time = 0;
   float mod;
@@ -38,6 +38,7 @@ class Timer {
     if (time >= width) {
       result = true;
       myMovie.jump(0);
+      //alarm.soundOn = true;
     } else {
       result = false;
     }
