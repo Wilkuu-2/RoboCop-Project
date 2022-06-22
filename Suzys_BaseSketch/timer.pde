@@ -18,10 +18,10 @@ class Timer {
   void render(int initNum) {
     if (currentNumber != initNum) {
       time = 0;
-      if (mod >= 15) {
-        mod = 15;
-      } else if (initNum >= 5) {
-        mod += 0.7;
+      if (mod >= 26) {
+        mod = 26;
+      } else if (initNum >= 0) {
+        mod += 3.1;
       }
     }
     update(0, height-60, width, 60, c1, c2);

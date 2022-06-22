@@ -45,6 +45,10 @@ class IDtag {
     if (score < 110) {
       score = 110;
     }
+    
+    if(score > 999){
+      score = 993;
+    }
 
     if (!hasOccupation) {
       chooseOccupation = int(random(0, 3));

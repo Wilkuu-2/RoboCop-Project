@@ -31,7 +31,7 @@ boolean currentstate = false;
 
 void setup() {
   background(255);
-  fullScreen();
+
 
   // initialize movie for ID tag
   myMovie = new Movie(this, "videoyay.mp4");
@@ -69,11 +69,16 @@ void setup() {
   timer = new Timer();
   caseTimerValue = 250;
   
+  fullScreen();
+  
   loadScreen = new LoadScreen(caseTimerValue);
   
   String[] cameras = Capture.list();
+  printArray(cameras);
   video = new Capture(this, 1280, 960, cameras[0]); //change it to 1 for the movable camera
   video.start();
+  
+  
 }
 
 void captureEvent(Capture video){
