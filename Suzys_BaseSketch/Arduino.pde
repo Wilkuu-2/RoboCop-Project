@@ -7,7 +7,7 @@
 
 class Arduino {
   static final int    messageLen  = 6;
-  static final String pollMessage = "PNNNY\n";
+  static final String pollMessageTemplate = "PNNN%c\n";
   static final long   waitMs      = 1;
 
   Serial port;
@@ -40,7 +40,8 @@ class Arduino {
   }
   void run() {
     if (arduinoEnabled) {
-      port.write(pollMessage);
+      port.write(String.format(pollMessageTemplate,
+                                started ? 'Y' : 'N'));
       // Wait for the message to be sent in
       do {
         try {

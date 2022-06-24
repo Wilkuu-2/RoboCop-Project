@@ -2,7 +2,7 @@
   Arduino Robocop code V2
 
     Solve any issues with bounce by using polling
-    
+
      2022 - Jakub Stachurski - github.com/Wilkuu-2
 
 */
@@ -11,7 +11,7 @@ const int yesBtn = 9;
 const int noBtn = 10;
 const int ledPin =  7;
 
-bool ledStatus = false; 
+bool ledStatus = false;
 
 // -- Entry
 void setup() {
@@ -23,25 +23,31 @@ void setup() {
 
 }
 
+char in[6]; 
+
 // -- Repeat
 void loop() {
   char message[] = "ANNNN\n"; //message layout
   // Wait for processing to ask for output
   if ( Serial.available() > 5) {
     //Discard everything Processing sent TODO: SET LED USING PROCESSING
-    while (Serial.available()) {
-      Serial.read();
-    }
-
-    char start = (digitalRead(startBtn)) ? 'Y' : 'N';
-    char yes =     (digitalRead(yesBtn)) ? 'Y' : 'N';
-    char no =       (digitalRead(noBtn)) ? 'Y' : 'N';
-    char led =               (ledStatus) ? 'Y' : 'N';
     
+    for(int i = 0; i < 6; i++){
+      in[i] = char(Serial.read());
+    }
+    ledStatus = in[4] == 'Y';
+
+    char start =  PINB & 1 << 0  ? 'Y' : 'N';
+    char yes =    PINB & 1 << 1  ? 'Y' : 'N';
+    char no =     PINB & 1 << 2  ? 'Y' : 'N';
+    char led =       (ledStatus) ? 'Y' : 'N';
+
     //Send The data as string using a formatted string to ensure message length
     sprintf(message, "A%c%c%c%c\n", start, yes, no, led); //https://www.cplusplus.com/reference/cstdio/sprintf/
     Serial.print(message); //If only serial had some sort of printf functionality instead of me having to use sprintf on a buffer
-
   }
-  delay(9); //We don't need to go too fast
+  else {
+    digitalWrite(ledPin, ledStatus);
+  }
+  delay(2); //We don't need to go too fast
 }
