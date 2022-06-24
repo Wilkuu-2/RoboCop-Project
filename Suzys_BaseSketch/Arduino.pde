@@ -3,52 +3,105 @@
  In this tab all functions for communication with arduino
  */
 
+
+
 class Arduino {
-  private Serial port;
+  static final int    messageLen  = 6;
+  static final String pollMessage = "PNNNY\n";
+  static final long   waitMs      = 1;
+
+  Serial port;
+
   boolean prevStart = false;
+  boolean prevYes   = false;
+  boolean prevNo    = false;
+
+  boolean started   = false;
+
+  boolean arduinoEnabled = true;
   String portOutput = "";
   boolean DEBUG;
   ArrayList<Interactible> interactibles;
-  Arduino(PApplet parent, int initPort, boolean initDebug, int baudr) {
-    DEBUG = initDebug;
-    interactibles = new ArrayList<Interactible>();
+
+  Arduino(PApplet parent, int initPort, boolean debug, int baudr) {
+    DEBUG = debug;
     if (DEBUG) {
       println("Available serial ports:");
       printArray(Serial.list());
     }
-    String serialPort = Serial.list()[initPort];
-    port = new Serial(parent, serialPort, baudr);
+    try {
+      port = new Serial(parent, Serial.list()[initPort]);
+    }
+    catch (ArrayIndexOutOfBoundsException a) {
+      println("Arduino not found: using keyboard only");
+    }
+
+    interactibles = new ArrayList<Interactible>();
   }
   void run() {
-    while (port.available()>0) { // when there is incoming serial data
-      portOutput += port.readString();
-      println(portOutput);
-    }
-    // Look for all the toggles
+    if (arduinoEnabled) {
+      port.write(pollMessage);
+      // Wait for the message to be sent in
+      do {
+        try {
+          Thread.sleep(waitMs);
+          println("Waiting: " +port.available()+ "\6");
+        }
+        catch (InterruptedException e) {
+          println("Waiting has been interrupted");
+          break;
+        }
+      } while (port.available() < messageLen);
 
-    if (portOutput.contains("son")) {
-      startPressed(true);
-      dbgPrintln("Press: {START}");
+      portOutput = port.readString();
+      dbgPrintln(portOutput);
+
+      assert portOutput.charAt(0) == 'A' && portOutput.charAt(5) == '\n' :
+      "Invalid message recieved"; // A hard attemt to avoid errors, pretty extreme, maybe drop instead?
+
+      boolean start = portOutput.charAt(1) == 'Y';
+      boolean yes   = portOutput.charAt(2) == 'Y';
+      boolean no    = portOutput.charAt(3) == 'Y';
+      // boolean led   = portOutput.charAt(4) == 'Y';
+
+      if (start && !prevStart) {
+        started = !started;
+        startPressed(started);
+      }
+      if (yes && !prevYes) {
+        yesPressed();
+      }
+      if (no && !prevNo) {
+        noPressed();
+      }
+
+      prevStart = start;
+      prevYes   = yes;
+      prevNo    = no;
+    } else {
+      prevStart = false;
+      prevYes   = false;
+      prevNo    = false;
     }
-    if (portOutput.contains("soff")) {
-      startPressed(false);
-      dbgPrintln("Press: {STOP}");
-    }
-    if (portOutput.contains("no")) {
-      noPressed();
-      dbgPrintln("Press: {NO}");
-    }
-    if (portOutput.contains("ye")) {
+
+    portOutput = "";
+  }
+
+  void runKey(char keyChar) {
+    switch(keyChar) {
+      case(' ') :
+      started = !started;
+      startPressed(started);
+      prevStart = true;
+      break;
+      case('a') :
       yesPressed();
-      dbgPrintln("Press: {YES}");
-    }
-
-    // Cut the processed substrings
-    while (portOutput.contains("\r\n")) {
-      int lastMessageEnd = portOutput.indexOf("\r\n");
-      //dbgPrintln("" + lastMessageEnd + " " + portOutput.length());
-      if (lastMessageEnd > -1)
-        portOutput = portOutput.subSequence(lastMessageEnd, portOutput.length() -1).toString();
+      prevYes = true;
+      break;
+      case('s') :
+      yesPressed();
+      prevYes = true;
+      break;
     }
   }
 
@@ -64,7 +117,6 @@ class Arduino {
     for (Interactible i : interactibles)
       i.yesPressed();
   }
-
 
   void dbgPrintln(String in) {
     if (DEBUG)
