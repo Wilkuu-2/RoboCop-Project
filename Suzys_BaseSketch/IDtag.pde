@@ -13,7 +13,8 @@ class IDtag {
   int citizenNumOne;
   int citizenNumTwo;
   int infoValue;
-  int randomValue;
+  int sentenceValue;
+
   String occupation;
   String citizenNum;
   String information;
@@ -21,7 +22,6 @@ class IDtag {
   PFont font2;
   PFont font3;
   boolean hasOccupation;
-  boolean isDutch;
 
   IDtag() {
     //for the info at the top
@@ -37,6 +37,9 @@ class IDtag {
 
     //general info switching
     infoValue = 0;
+
+    //general info randomizing
+    sentenceValue = 0;
   }
 
   void update(int initSocialScore) {
@@ -45,8 +48,8 @@ class IDtag {
     if (score < 110) {
       score = 110;
     }
-    
-    if(score > 999){
+
+    if (score > 999) {
       score = 993;
     }
 
@@ -83,15 +86,9 @@ class IDtag {
         hasOccupation = true;
       }
 
-      if (isDutch) {
-        citizenNumOne = int(random(19807, 99807));
-        citizenNumTwo = int(random(1847398, 9847398));
-        citizenNum = "NLDR" + citizenNumOne + citizenNumTwo;
-      } else {
-        citizenNumOne = int(random(198070, 998070));
-        citizenNumTwo = int(random(18473980, 98473980));
-        citizenNum = "EU" + citizenNumOne + citizenNumTwo;
-      }
+      citizenNumOne = int(random(198070, 998070));
+      citizenNumTwo = int(random(184739, 984739));
+      citizenNum = "EARTH" + citizenNumOne + citizenNumTwo;
     }
   }
 
@@ -99,10 +96,6 @@ class IDtag {
     pushMatrix();
     translate(90, 70);
 
-    //fill(255, 30);
-    //rect(0, 0, 1440, 800);
-    //fill(255, 0, 0, 60);
-    //rect(18, 150, 483, 640);
     fill(255);
     textFont(font);
     textAlign(LEFT);
@@ -114,8 +107,6 @@ class IDtag {
 
     pushMatrix();
     translate(660, 610);
-    //fill(255, 70);
-    //rect(0, 0, 866, 256);
     fill(255);
     textFont(font3);
     textAlign(CENTER);
@@ -125,8 +116,6 @@ class IDtag {
 
     pushMatrix();
     translate(1504, 116);
-    //fill(255, 30);
-    //rect(0, 0, 380, 193);
     line(190, 0, 190, 193);
     fill(255);
     textFont(font2);
@@ -135,62 +124,232 @@ class IDtag {
     popMatrix();
   }
 
-  void citizenNumUpdate(boolean answer) {
-    if (imageNum == 4) {
-      if (answer) {
-        isDutch = true;
-      } else {
-        isDutch = false;
-      }
-    }
-  }
-
   void generalInfoUpdate(boolean answer) {
-    if (imageNum == 2) {
-      if (answer) {
-        //is not human
-        infoValue = 1;
+    switch(imgListValue) {
+      case(0):
+      if (imageNum == 2) {
+        if (!answer) {
+          sentenceValue++;
+        }
       }
-    }
 
-    if (imageNum == 13) {
-      if (answer) {
-        //likes pineapple
-        infoValue = 2;
-      }
-    }
-
-    if (imageNum == 19) {
-      if (answer) {
-        //is brave
-        if (infoValue == 0) {
-          infoValue = 3;
-        } else if (infoValue == 2) {
-          randomValue = int(random(0, 3));
-          if (randomValue == 1) {
-            infoValue = 2;
+      if (imageNum == 8) {
+        if (answer) {
+          if (sentenceValue != 0) {
+            sentenceValue += 2;
           } else {
-            infoValue = 3;
+            sentenceValue = 2;
           }
         }
       }
+
+      if (sentenceValue != 0) {
+        int store = int(random(1, 4));
+        if (store == 1) {
+          infoValue = int(random(0, 2));
+        } else {
+          if (sentenceValue == 3) {
+            infoValue = int(random(2, 4));
+          } else {
+            if (sentenceValue == 1) {
+              infoValue = 2;
+            } else {
+              infoValue = 3;
+            }
+          }
+        }
+      } else {
+        infoValue = int(random(0, 2));
+      }
+      break;
+
+      case(1):
+      if (imageNum == 3) {
+        if (answer) {
+          sentenceValue++;
+        }
+      }
+
+      if (imageNum == 10) {
+        if (answer) {
+          if (sentenceValue != 0) {
+            sentenceValue += 2;
+          } else {
+            sentenceValue = 2;
+          }
+        }
+      }
+
+      if (sentenceValue != 0) {
+        int store = int(random(1, 4));
+        if (store == 1) {
+          infoValue = int(random(4, 6));
+        } else {
+          if (sentenceValue == 3) {
+            infoValue = int(random(6, 8));
+          } else {
+            if (sentenceValue == 1) {
+              infoValue = 6;
+            } else {
+              infoValue = 7;
+            }
+          }
+        }
+      } else {
+        infoValue = int(random(4, 6));
+      }
+      break;
+
+      case(2):
+      if (imageNum == 7) {
+        if (answer) {
+          sentenceValue++;
+        }
+      }
+
+      if (imageNum == 9) {
+        if (!answer) {
+          if (sentenceValue != 0) {
+            sentenceValue += 2;
+          } else {
+            sentenceValue = 2;
+          }
+        }
+      }
+
+      if (sentenceValue != 0) {
+        int store = int(random(1, 4));
+        if (store == 1) {
+          infoValue = int(random(8, 10));
+        } else {
+          if (sentenceValue == 3) {
+            infoValue = int(random(10, 12));
+          } else {
+            if (sentenceValue == 1) {
+              infoValue = 10;
+            } else {
+              infoValue = 11;
+            }
+          }
+        }
+      } else {
+        infoValue = int(random(8, 10));
+      }
+      break;
+
+      case(3):
+      if (imageNum == 1) {
+        if (answer) {
+          sentenceValue++;
+        }
+      }
+
+      if (imageNum == 3) {
+        if (!answer) {
+          if (sentenceValue != 0) {
+            sentenceValue += 2;
+          } else {
+            sentenceValue = 2;
+          }
+        }
+      }
+
+      if (sentenceValue != 0) {
+        int store = int(random(1, 4));
+        if (store == 1) {
+          infoValue = int(random(12, 14));
+        } else {
+          if (sentenceValue == 3) {
+            infoValue = int(random(14, 16));
+          } else {
+            if (sentenceValue == 1) {
+              infoValue = 14;
+            } else {
+              infoValue = 15;
+            }
+          }
+        }
+      } else {
+        infoValue = int(random(12, 14));
+      }
+      break;
     }
 
     switch (infoValue) {
-      case (0):
+      ////////// image list 1
+      case(0):
       information = "This human enjoys the simplicity of the past and indulges in stuff from the 2020s. They suffer from imposter syndrome but still strive to succeed in life.";
       break;
 
       case(1):
+      information = "This well educated citizen represents the finer side of humanity, giving a kind reminder of all the good in the world.";
+      break;
+
+      // question 2 no
+      case(2):
       information = "We welcome this non-human with open arms, in compliance with the intergalactic peace treaty. Indebted to SpaceX.";
       break;
 
-      case(2):
+      // question 8 yes
+      case(3):
+      information = "This person is empathetic and wants to help people learn from their mistakes.";
+      break;
+
+      ////////// image list 2
+      case(4):
+      information = "This person does the best they can do with what they have and strive to achieve their goals.";
+      break;
+
+      case(5):
+      information = "This model citizen does their best to max out their social score and reap its benefits for the greater good.";
+      break;
+
+      // question 3 yes
+      case(6):
       information = "This human is exceptional, because they appreciate the finer things in life... pineapple pizza. I'm lovin' it.";
       break;
 
-      case(3):
+      // question 10 yes
+      case(7):
       information = "This human is fearless and knows how to pick their battles... most of the time.";
+      break;
+
+      ////////// image list 3
+      case(8):
+      information = "This citizen would like to make a change in the world, whether big or small, and inspire others to do the same.";
+      break;
+
+      case(9):
+      information = "This adventurous human likes to indulge in the creative expressions of art and technology, enjoying the crafts made by humans and nature.";
+      break;
+
+      // question 7 if yes
+      case(10):
+      information = "This person is empathetic and wants to help people learn from their mistakes.";
+      break;
+
+      // question 9 if no
+      case(11):
+      information = "This person always tries to see the bright side of things, and strives towards excellence.";
+      break;
+
+      ////////// image list 4
+      case(12):
+      information = "This kind person enjoys serene environments and exploring the wacky things in life. They like to indulge in earthly desires.";
+      break;
+
+      case(13):
+      information = "This charming person radiates joy and is humble, working as an example citizen for the 22nd century.";
+      break;
+
+      // question 1 if yes
+      case(14):
+      information = "This human is exceptional, because they appreciate the finer things in life... pineapple pizza. I'm lovin' it.";
+      break;
+
+      // question 3 if no
+      case(15):
+      information = "We welcome this non-human with open arms, in compliance with the intergalactic peace treaty. Indebted to SpaceX.";
       break;
     }
   }

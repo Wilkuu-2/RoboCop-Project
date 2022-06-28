@@ -3,13 +3,14 @@
  In this tab all logical statements for the butonclicks are defined
  */
 
-class TestInteractible implements Interactible { 
+class TestInteractible implements Interactible {
   //Enter your code that should happen when the START button is clicked
   void startPressed(boolean isOn) {
     if (isOn) {
       started = true;
       imageNum = 1;
     } else {
+      switchImgValue();
       started = false;
       imageNum = 0;
       socialScore.reset();
@@ -21,6 +22,7 @@ class TestInteractible implements Interactible {
       alarm.oneMistake = false;
       idTag.hasOccupation = false;
       idTag.infoValue = 0;
+      idTag.sentenceValue = 0;
       file.stop();
       file2.stop();
     }
@@ -33,7 +35,6 @@ class TestInteractible implements Interactible {
     if (started) {
       if (caseValue == 0) {
         socialScore.update(true);
-        idTag.citizenNumUpdate(true);
         idTag.generalInfoUpdate(true);
         imageNum++;
       } else if (caseValue == 3 && alarm.alarmDisplay == 1) {
@@ -50,7 +51,6 @@ class TestInteractible implements Interactible {
     if (started) {
       if (caseValue == 0) {
         socialScore.update(false);
-        idTag.citizenNumUpdate(false);
         idTag.generalInfoUpdate(false);
         imageNum++;
       } else if (caseValue == 3 && alarm.alarmDisplay == 1) {

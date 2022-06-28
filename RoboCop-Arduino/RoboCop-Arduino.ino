@@ -29,14 +29,13 @@ char in[6];
 void loop() {
   char message[] = "ANNNN\n"; //message layout
   // Wait for processing to ask for output
-  if ( Serial.available() > 5) {
-    //Discard everything Processing sent TODO: SET LED USING PROCESSING
-    
+  if ( Serial.available() > 5) { 
     for(int i = 0; i < 6; i++){
       in[i] = char(Serial.read());
     }
     ledStatus = in[4] == 'Y';
 
+    // Using direct pin register access to get more preformance out of reading 
     char start =  PINB & 1 << 0  ? 'Y' : 'N';
     char yes =    PINB & 1 << 1  ? 'Y' : 'N';
     char no =     PINB & 1 << 2  ? 'Y' : 'N';

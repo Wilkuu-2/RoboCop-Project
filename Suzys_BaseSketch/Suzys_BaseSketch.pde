@@ -15,14 +15,14 @@ SocialScore socialScore;
 Timer timer;
 SoundFile file;
 SoundFile file2;
-LoadScreen loadScreen;
 Capture video;
 
 int imageNum = 0;
-int MAX_IMAGENUM = 39;
+int MAX_IMAGENUM = 16;
 int caseValue = 0;
 int caseTimer;
 int caseTimerValue;
+int imgListValue;
 
 boolean started = false;
 boolean answer;
@@ -31,7 +31,6 @@ boolean currentstate = false;
 
 void setup() {
   background(255);
-
 
   // initialize movie for ID tag
   myMovie = new Movie(this, "videoyay.mp4");
@@ -65,23 +64,20 @@ void setup() {
   for (int i = 1; i < MAX_IMAGENUM-1; i++) {
     questions[i] = new Question(i);
   }
-  socialScore = new SocialScore(700);
+  socialScore = new SocialScore(500);
   timer = new Timer();
   caseTimerValue = 250;
-  
+
   fullScreen();
-  
-  loadScreen = new LoadScreen(caseTimerValue);
-  
   String[] cameras = Capture.list();
   printArray(cameras);
   video = new Capture(this, 1280, 960, cameras[0]); //change it to 1 for the movable camera
   video.start();
-  
-  
+
+  imgListValue = int(random(0, 4));
 }
 
-void captureEvent(Capture video){
+void captureEvent(Capture video) {
   video.read();
 }
 
@@ -90,6 +86,11 @@ void draw() {
 
   // activate arduino activity
   arduino.run();
+
+  // correct imageCaseValue
+  if (imgListValue > 3) {
+    imgListValue = 0;
+  }
 
   // change from questionnaire to finish screen when last question has been answered
   if (imageNum < MAX_IMAGENUM-1) {
@@ -121,22 +122,18 @@ void draw() {
     if (imageNum == 0) {
       image(startScreen, 0, 0);
     } else {
-      questions[imageNum].render();
+      questions[imageNum].render(imgListValue);
     }
-    
+
     if (imageNum != 0) {
       timer.render(imageNum);
     }
-    //file.stop();
-    //file2.stop();
     break;
 
     // finish screen
     case(1):
     resetMovieTest(loadingScreen, 22.5);
     image(loadingScreen, 0, 0);
-    //questions[MAX_IMAGENUM-1].render();
-    //loadScreen.render();
     break;
 
     // final ID tag display
@@ -145,7 +142,7 @@ void draw() {
     image(myMovie, 0, 0);
     idTag.update(socialScore.score);
     idTag.render();
-    copy(video,350, 0, 483, 640, 108, 220, 483, 640);
+    copy(video, 350, 0, 483, 640, 108, 220, 483, 640);
     break;
 
     // alarm question
@@ -167,6 +164,10 @@ void resetMovieTest(Movie m, float initMaxDuration) {
   if (m.time() > initMaxDuration) {
     m.jump(0);
   }
+}
+
+void switchImgValue() {
+  imgListValue++;
 }
 
 void mouseClicked() {
