@@ -1,0 +1,595 @@
+{
+	
+	"videos": [
+		{
+			"name" : "!end",
+			"vidPath" : "finished.mp4",
+			"next" : "!scoreBoard",
+			"duration": 2.0
+		},
+		{	
+			"name" : "!scoreBoard",
+			"vidPath" : "videoyay.mp4",
+			"loop" : true,
+			"next" : " "
+		},
+		{
+			"name" : "!idle",
+			"vidPath" : "start.mp4",
+			"loop" : true,
+			"next": "?pool1" 
+		},
+		{
+			"name" : "!timeUp",
+			"vidPath" : "alarm2.mp4",
+			"loop" : false,
+			"next": "timeUpQ" ,
+			"duration": 3.0
+		},
+		{
+			"name" : "!endCorrupt",
+			"vidPath" : "cursedID.mp4",
+			"loop" : true,
+			"next" : " "
+		}
+		
+	],
+	
+	"questions" : [
+		{
+			"name": "init",
+			"imgPath" : "first/4.png",
+			"yes" : 
+			{
+				"scoreMin" : -10,
+				"scoreMax" : -10, 
+				"next"  : "?pool1"
+				
+			},
+			"no" : {
+				"scoreMin" : -10,
+				"scoreMax" : -10, 
+				"next"  : "?pool1"
+			}
+		},
+		{
+			"name": "timeUpQ",
+			"imgPath" : "alarm.png",
+			"timer"   : false,
+			"yes" : 
+			{
+				"scoreMin" : -10,
+				"scoreMax" : -10, 
+				"next"  : "?pool1"
+				
+			},
+			"no" : {
+				"scoreMin" : 0,
+				"scoreMax" : 0,
+				"next"  : "!endCorrupt"
+			}
+		}
+	],
+	"pools" : [
+		
+		{
+			"name": "?pool1",
+			"end": "?pool2",
+			"max": 5,
+			"questions": [
+				{
+					"name": "first1",
+					"imgPath": "first/1.png",
+					"yes": 
+					{
+						"scoreMin": 5,
+						"scoreMax": 10,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -5,
+						"scoreMax": -10,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "first2",
+					"imgPath": "first/2.png",
+					"yes": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 20,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": 30,
+						"scoreMax": 30,
+						"next": "?pool1",
+						"vars" : [
+							{
+								"name": "isHuman",
+								"value" : false
+							}
+						]
+					}
+					
+				}
+				,
+				{
+					"name": "first3",
+					"imgPath": "first/3.png",
+					"yes": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 15,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "first4",
+					"imgPath": "first/4.png",
+					"yes": 
+					{
+						"scoreMin": 35,
+						"scoreMax": 40,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -35,
+						"scoreMax": -40,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "first5",
+					"imgPath": "first/5.png",
+					"yes": 
+					{
+						"scoreMin": 5,
+						"scoreMax": 5,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 10,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "second1",
+					"imgPath": "second/1.png",
+					"yes": 
+					{
+						"scoreMin": -5,
+						"scoreMax": -10,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": 5,
+						"scoreMax": 15,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "second2",
+					"imgPath": "second/2.png",
+					"yes": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 25,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -20,
+						"scoreMax": -25,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "second3",
+					"imgPath": "second/3.png",
+					"yes": 
+					{
+						"scoreMin": -100,
+						"scoreMax": -120,
+						"next": "?pool1",
+						"vars" : [
+							{
+								"name": "pineApplePizza",
+								"value" : true
+							}
+						]
+					},
+					"no": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 15,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "second4",
+					"imgPath": "second/4.png",
+					"yes": 
+					{
+						"scoreMin": 15,
+						"scoreMax": 20,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -15,
+						"scoreMax": -20,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "second5",
+					"imgPath": "second/5.png",
+					"yes": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 25,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -20,
+						"scoreMax": 25,
+						"next": "?pool1"
+					}
+					
+				}
+				
+			]
+			
+		},
+		{
+			"name": "?pool2",
+			"end": "?pool3",
+			"max": 5,
+			"questions": [
+				{
+					"name": "first7",
+					"imgPath": "first/7.png",
+					"yes": 
+					{
+						"scoreMin": -25,
+						"scoreMax": -30,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 25,
+						"scoreMax": 30,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "first8",
+					"imgPath": "first/8.png",
+					"yes": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 15,
+						"next": "?pool2",
+						"vars" : [
+							{
+								"name": "isEmpathetic",
+								"value" : true 
+							}
+						]
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": 15,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "first10",
+					"imgPath": "first/10.png",
+					"yes": 
+					{
+						"scoreMin": -50,
+						"scoreMax": -55,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 50,
+						"scoreMax": 55,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "second6",
+					"imgPath": "second/6.png",
+					"yes": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 15,
+						"scoreMax": 15,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "second7",
+					"imgPath": "second/7.png",
+					"yes": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 20,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "second8",
+					"imgPath": "second/8.png",
+					"yes": 
+					{
+						"scoreMin": 35,
+						"scoreMax": 40,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": -35,
+						"scoreMax": 40,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "second9",
+					"imgPath": "second/9.png",
+					"yes": 
+					{
+						"scoreMin": -15,
+						"scoreMax": -20,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 15,
+						"scoreMax": 20,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "second10",
+					"imgPath": "second/10.png",
+					"yes": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool2",
+						"vars" : [
+							{
+								"name": "isEmpathetic",
+								"value" : true 
+							}
+						]
+					},
+					"no": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 15,
+						"next": "?pool2"
+					}
+					
+				}
+				
+			]
+			
+		},
+		{
+			"name": "?pool3",
+			"end": "!end",
+			"max": 5,
+			"questions": [
+				{
+					"name": "first11",
+					"imgPath": "first/11.png",
+					"yes": 
+					{
+						"scoreMin": -5,
+						"scoreMax": -10,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": 5,
+						"scoreMax": 10,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "first12",
+					"imgPath": "first/12.png",
+					"yes": 
+					{
+						"scoreMin": -20,
+						"scoreMax": -25,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 25,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "first13",
+					"imgPath": "first/13.png",
+					"yes": 
+					{
+						"scoreMin": -70,
+						"scoreMax": -75,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": 70,
+						"scoreMax": 75,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "first14",
+					"imgPath": "first/14.png",
+					"yes": 
+					{
+						"scoreMin": 35,
+						"scoreMax": 40,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": -75,
+						"scoreMax": -75,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "first15",
+					"imgPath": "first/15.png",
+					"yes": 
+					{
+						"scoreMin": -5,
+						"scoreMax": -5,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": 5,
+						"scoreMax": 5,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "second12",
+					"imgPath": "second/12.png",
+					"yes": 
+					{
+						"scoreMin": -20,
+						"scoreMax": -25,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 25,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "second13",
+					"imgPath": "second/13.png",
+					"yes": 
+					{
+						"scoreMin": 50,
+						"scoreMax": 55,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": -50,
+						"scoreMax": -55,
+						"next": "?pool3"
+					}
+					
+				}
+				,
+				{
+					"name": "second14",
+					"imgPath": "second/14.png",
+					"yes": 
+					{
+						"scoreMin": 15,
+						"scoreMax": 20,
+						"next": "?pool3"
+					},
+					"no": 
+					{
+						"scoreMin": -15,
+						"scoreMax": -20,
+						"next": "?pool3"
+					}
+					
+				}
+				
+			]
+			
+		}
+		
+		
+		
+	]
+}
