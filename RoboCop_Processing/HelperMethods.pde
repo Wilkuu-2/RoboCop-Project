@@ -19,17 +19,25 @@ Movie loadMovie(String path) {
 }
 
  public void loadQuestions() {
+  long milliStart = millis();
   println("+----------[QLoad]-----------+");
   println("[QLOAD]: loading Questions");
   questionPools  = new HashMap<String, QuestionPool>();
   looseQuestions = new HashMap<String, Question>();
   
+  System.out.printf("[QLOAD]: HashMaps initialized in %.2gs\n", (millis() - milliStart)/1000f);
+  milliStart = millis();
+   
   JSONArray pools = qJSON.getJSONArray("pools");
   for (int i = 0; i < pools.size(); i++) {
     var poolObject = pools.getJSONObject(i);
     QuestionPool pool = new QuestionPool(poolObject);
     questionPools.put(pool.name, pool);
   }
+
+  System.out.printf("[QLOAD]: Pools loaded in %.2gs\n", (millis() - milliStart)/1000f);
+  milliStart = millis();
+
   println("|-------------------------[QLOAD: LOOSE]---------------------------|");
   println("|--------name--------|---------yes->--------|----------no->--------|");
   JSONArray questions = qJSON.getJSONArray("questions");
@@ -37,6 +45,8 @@ Movie loadMovie(String path) {
     var question = new Question(questions.getJSONObject(i));
     looseQuestions.put(question.name, question);
   }
+  System.out.printf("[QLOAD]: Questions loaded in %.2gs\n", (millis() - milliStart)/1000f);
+
 }
 
 

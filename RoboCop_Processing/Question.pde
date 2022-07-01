@@ -3,6 +3,7 @@ class Question implements Displayable, Interactible{
   String name;
   PImage img; 
   boolean useTimer = true; 
+  boolean wasSelected = false;
   String yesNext;
   String noNext;
   
@@ -28,7 +29,7 @@ class Question implements Displayable, Interactible{
     noNext = answerObj.getString("next");
     assert noNext != null   : "[QLOAD][ERROR]<" +name+ ">: No target for \"no\"";
     
-    System.out.printf("|%-20s| %-20s | %-20s |\n", name, yesNext, noNext);
+     System.out.printf("|%-20s| %-20s | %-20s |\n", name, yesNext, noNext);
     
     try {
       useTimer = obj.getBoolean("timer");

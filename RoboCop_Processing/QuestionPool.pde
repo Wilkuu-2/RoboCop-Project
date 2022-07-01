@@ -1,4 +1,5 @@
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 class QuestionPool extends ArrayList<Question> {
   JSONObject poolObj;
@@ -9,6 +10,7 @@ class QuestionPool extends ArrayList<Question> {
 
   QuestionPool(JSONObject obj) {
     super();
+
     name = obj.getString("name");
     end = obj.getString("end");
 
@@ -34,11 +36,25 @@ class QuestionPool extends ArrayList<Question> {
     try {
       if (used >= max)
         throw new IndexOutOfBoundsException();
-      setQuestion(remove(round(random(0, size() -1))));
+      
+      ArrayList<Question> availQuestions = new ArrayList<Question>(
+                                          stream()
+                                          .filter(q -> !q.wasSelected)
+                                          .collect(Collectors.toList()));
+                                          
+      setQuestion(availQuestions.remove(
+                                   round(
+                                     random(0, 
+                                        availQuestions.size() -1))));
       used ++;
     }
+    
     catch(IndexOutOfBoundsException e) {
       resolveTarget(end);
     }
+  }
+  void reset(){
+    used = 0; 
+    forEach(q -> q.wasSelected = false);
   }
 }

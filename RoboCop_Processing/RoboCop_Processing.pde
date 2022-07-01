@@ -35,6 +35,7 @@ void setup() {
   arduino = new Arduino(this, 0, false, 9600);
   state = new State();
   arduino.interactibles[0] = state;
+  loadQuestions();
   reset();
 }
 
@@ -47,7 +48,7 @@ void begin() {
 }
 
 void reset() {
-  loadQuestions();
+  questionPools.forEach( (s,p) -> p.reset() );
   setVideo(videos.get("!idle"));
   print("[RESET]");
 }
