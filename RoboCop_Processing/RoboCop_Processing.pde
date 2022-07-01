@@ -3,12 +3,12 @@ import processing.serial.*;
 import processing.video.*;
 
 Arduino arduino;
-Timer timer; 
+Timer timer;
 
 // New globals
 final static String dataPath = "/store/Study/RoboCop-Project/Suzys_BaseSketch/data/";
 final static String questionJSONpath = "./questions.json";
-static final int camInd = 1;
+static final int camInd = 0;
 
 JSONObject qJSON;
 HashMap<String, Video>        videos;
@@ -32,7 +32,8 @@ void setup() {
 
   loadVideos();
 
-  arduino = new Arduino(this, 0, false, 9600);
+  arduino = new Arduino(this, 0, true, 9600);
+
   state = new State();
   arduino.interactibles[0] = state;
   loadQuestions();
@@ -48,26 +49,28 @@ void begin() {
 }
 
 void reset() {
-  questionPools.forEach( (s,p) -> p.reset() );
+  questionPools.forEach( (s, p) -> p.reset() );
   setVideo(videos.get("!idle"));
   print("[RESET]");
 }
 
 
 public void draw() {
+
   arduino.run();
+
   background(10);
   currentDisplayable.display();
-  
-  if(timer != null){
+
+  if (timer != null) {
     timer.display();
-    if(timer.isUp() && currentDisplayable instanceof Question){
-        resolveTarget("!timeUp");
+    if (timer.isUp() && currentDisplayable instanceof Question) {
+      resolveTarget("!timeUp");
     }
   }
 }
 
-// read movie frames
+//read movie frames
 void movieEvent(Movie m) {
   m.read();
 }

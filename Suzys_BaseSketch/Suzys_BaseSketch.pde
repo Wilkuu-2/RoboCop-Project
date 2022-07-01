@@ -170,6 +170,10 @@ void switchImgValue() {
   imgListValue++;
 }
 
+void keyPressed() {
+  arduino.runKey(key);
+}
+
 void mouseClicked() {
   exit();
 }

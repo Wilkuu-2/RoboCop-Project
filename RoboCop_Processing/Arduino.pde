@@ -7,7 +7,7 @@
 
 class Arduino {
   static final int    messageLen  = 6;
-  static final String pollMessageTemplate = "PNNN%c\n";
+  static final String pollMessageTemplate = "PNNN%1d\n";
   static final long   waitMs      = 1;
 
   Serial port;
@@ -17,7 +17,8 @@ class Arduino {
   boolean prevNo    = false;
 
   boolean started   = false;
-
+  int ledLevel = 0; 
+   
   boolean arduinoEnabled = true;
   String portOutput = "";
   boolean DEBUG;
@@ -30,7 +31,7 @@ class Arduino {
       printArray(Serial.list());
     }
     try {
-      port = new Serial(parent, Serial.list()[initPort]);
+      port = new Serial(parent, Serial.list()[initPort], baudr);
     }
     catch (ArrayIndexOutOfBoundsException a) {
       println("Arduino not found: using keyboard only");
@@ -41,19 +42,25 @@ class Arduino {
   }
   void run() {
     if (arduinoEnabled) {
+        //dbgPrintln("Sending message");
       port.write(String.format(pollMessageTemplate,
-                                started ? 'Y' : 'N'));
+                                started ? ledLevel : 9));
+      println(String.format(pollMessageTemplate,
+                                started ? ledLevel : 9));
       // Wait for the message to be sent in
       do {
         try {
           Thread.sleep(waitMs);
+          //dbgPrintln("Waiting: " + port.available() + "/6");
         }
         catch (InterruptedException e) {
+          assert false; 
           break;
         }
       } while (port.available() < messageLen);
 
       portOutput = port.readString();
+      dbgPrintln(portOutput);
 
       assert portOutput.charAt(0) == 'A' && portOutput.charAt(5) == '\n' :
       "Invalid message recieved"; // A hard attemt to avoid errors, pretty extreme, maybe drop instead?

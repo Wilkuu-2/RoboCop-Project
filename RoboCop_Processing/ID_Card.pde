@@ -103,6 +103,24 @@ class IDCard extends Video {
       infoNum = 13;
     else
       infoNum = round(random(0, 8));
+      
+    if(score >= 950){
+      arduino.ledLevel = 8;
+    } else if(score >= 900){
+      arduino.ledLevel = 7;
+    } else if(score >= 800){
+      arduino.ledLevel = 6;
+    } else if(score >= 650){
+      arduino.ledLevel = 5;
+    } else if(score >= 450){
+      arduino.ledLevel = 4;
+    } else if(score >= 300){
+      arduino.ledLevel = 3;
+    } else if(score >= 150){
+      arduino.ledLevel = 2;
+    } else{
+      arduino.ledLevel = 1;
+    } 
   }
 
   @Override public

@@ -34,6 +34,7 @@ class Arduino {
     }
     catch (ArrayIndexOutOfBoundsException a) {
       println("Arduino not found: using keyboard only");
+      arduinoEnabled =false;
     }
 
     interactibles = new ArrayList<Interactible>();
@@ -41,12 +42,15 @@ class Arduino {
   void run() {
     if (arduinoEnabled) {
       port.write(String.format(pollMessageTemplate,
-                                started ? 'Y' : 'N'));
+        started ? 'Y' : 'N'));
+        
+      dbgPrintln(String.format(pollMessageTemplate,
+        started ? 'Y' : 'N'));
       // Wait for the message to be sent in
       do {
         try {
           Thread.sleep(waitMs);
-          println("Waiting: " +port.available()+ "\6");
+          //println("Waiting: " + port.available() + "/6");
         }
         catch (InterruptedException e) {
           println("Waiting has been interrupted");
@@ -100,7 +104,7 @@ class Arduino {
       prevYes = true;
       break;
       case('s') :
-      yesPressed();
+      noPressed();
       prevYes = true;
       break;
     }

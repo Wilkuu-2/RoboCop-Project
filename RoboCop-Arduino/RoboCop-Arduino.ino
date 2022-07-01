@@ -11,10 +11,10 @@ const int yesBtn = 9;
 const int noBtn = 10;
 const int ledPin =  7;
 
-bool ledStatus = false;
+int ledStatus = 0;
 
 // -- Entry
-void setup() {
+void setup() {  
   Serial.begin(9600);
   pinMode(startBtn, INPUT);
   pinMode(  yesBtn, INPUT);
@@ -33,20 +33,20 @@ void loop() {
     for(int i = 0; i < 6; i++){
       in[i] = char(Serial.read());
     }
-    ledStatus = in[4] == 'Y';
+    ledStatus = (uint8_t)(in[4]-48); // Convert ASCII char to int 
 
     // Using direct pin register access to get more preformance out of reading 
     char start =  PINB & 1 << 0  ? 'Y' : 'N';
     char yes =    PINB & 1 << 1  ? 'Y' : 'N';
     char no =     PINB & 1 << 2  ? 'Y' : 'N';
-    char led =       (ledStatus) ? 'Y' : 'N';
+    char led =    (char)(48 + ledStatus); //Convert int to ASCII CHAR;
 
     //Send The data as string using a formatted string to ensure message length
     sprintf(message, "A%c%c%c%c\n", start, yes, no, led); //https://www.cplusplus.com/reference/cstdio/sprintf/
     Serial.print(message); //If only serial had some sort of printf functionality instead of me having to use sprintf on a buffer
   }
   else {
-    digitalWrite(ledPin, ledStatus);
+    digitalWrite(ledPin, ledStatus > 0);
   }
   delay(2); //We don't need to go too fast
 }
