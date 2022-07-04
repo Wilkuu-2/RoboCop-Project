@@ -42,11 +42,12 @@ class Arduino {
   void run() {
     if (arduinoEnabled) {
       port.write(String.format(pollMessageTemplate,
-        started ? 'Y' : 'N'));
+        started ? '0' : '9'));
         
-      dbgPrintln(String.format(pollMessageTemplate,
-        started ? 'Y' : 'N'));
+      print("[ARDUINO] OUT: " + String.format(pollMessageTemplate,
+        started ? '0' : '9'));
       // Wait for the message to be sent in
+      long startMillis = millis();
       do {
         try {
           Thread.sleep(waitMs);
@@ -57,9 +58,10 @@ class Arduino {
           break;
         }
       } while (port.available() < messageLen);
-
+      dbgPrintln(" WAITED: " + (millis() - startMillis) + " ms.");
+      
       portOutput = port.readString();
-      dbgPrintln(portOutput);
+      print("[ARDUINO] IN: " + portOutput);
 
       assert portOutput.charAt(0) == 'A' && portOutput.charAt(5) == '\n' :
       "Invalid message recieved"; // A hard attemt to avoid errors, pretty extreme, maybe drop instead?

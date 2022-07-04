@@ -1,6 +1,8 @@
-import java.util.HashMap;
+ 
+ import java.util.HashMap;
 import processing.serial.*;
 import processing.video.*;
+import processing.sound.*;
 
 Arduino arduino;
 Timer timer;
@@ -24,7 +26,7 @@ State state;
 
 void setup() {
   //size(900, 900);
-  fullScreen();
+  fullScreen(1);
   Displayable.size.x = width;
   Displayable.size.y = height;
 
@@ -41,16 +43,18 @@ void setup() {
 }
 
 void begin() {
-  println("[BEGIN]");
-  resolveTarget("?pool1");
-
+  println("[BEGIN]"); 
   state = new State();
-  currentDisplayable = currentQuestion;
+  resolveTarget("?pool1");
 }
 
 void reset() {
+  if (currentDisplayable instanceof Video) {
+    ((Video) currentDisplayable).breakLoop();
+  }
   questionPools.forEach( (s, p) -> p.reset() );
   setVideo(videos.get("!idle"));
+  arduino.ledLevel = 0; 
   print("[RESET]");
 }
 

@@ -2,7 +2,6 @@
 
 class State implements Interactible {
   int questionsAnswered = 0;
-  //int score = round(random(0,300));
   int score = 0;
   // Custom Vars
   boolean isHuman = true;
@@ -12,11 +11,26 @@ class State implements Interactible {
   boolean isBrave          = false;
 
 
+  // Rickroll event
+  boolean hasBeenRickrolled = false;
+  int     shortTimers      = 0;
+  final static int maxShortTimers = 4;
+  final static float shortTimerFraction = 0.06f;
+
+
   State() {
-    score = round(random(50,300));
+    score = round(random(400, 550));
+    questionsAnswered = 0; 
+    
+      // Custom Vars
+    isHuman = true;
+    isEmpathetic = false;
+    isPessimistic = true;
+    pineApplePizza   = false;
+    isBrave          = false;
   }
 
-   public void setVarsFromJSON(JSONArray arr) {
+  public void setVarsFromJSON(JSONArray arr) {
     for (int i = 0; i < arr.size(); i++ ) {
       var variable = arr.getJSONObject(i);
       var name = variable.getString("name");
@@ -36,22 +50,34 @@ class State implements Interactible {
         case("isBrave"):
         isBrave = variable.getBoolean("value");
         break;
+        case("hasBeenRickrolled"):
+        hasBeenRickrolled = variable.getBoolean("value");
+        break;
       }
     }
   }
+  public boolean isShortTimed(Timer t) {
+    if (!hasBeenRickrolled &&t != null && t.getFractionalProgress() < shortTimerFraction)
+      shortTimers++;
 
-   public void addScore(float inMin, float inMax) {
-    float nMin = min(inMin,inMax);
-    float nMax = max(inMin,inMax);
+    if (shortTimers >= maxShortTimers) {
+      shortTimers = 0;
+      return true;
+    }
+    return false;
+  }
+
+  public void addScore(float inMin, float inMax) {
+    float nMin = min(inMin, inMax);
+    float nMax = max(inMin, inMax);
     int scoreAdd = round(random(nMin, nMax));
     // score = max(0, min(1000, score + scoreAdd));
     score += scoreAdd;
     System.out.printf("[SCORE]: score: %05d (%+4d)\n", score, scoreAdd);
-    
   }
 
   //Enter your code that should happen when the START button is clicked
-   public void startPressed(boolean isOn) {
+  public void startPressed(boolean isOn) {
     if (isOn) {
       begin();
     } else {
@@ -60,10 +86,10 @@ class State implements Interactible {
   }
 
   //Enter your code that should happen when the YES button is clicked
-   public void yesPressed() {
+  public void yesPressed() {
   }
 
   //Enter your code that should happen whens the NO button is clicked
-   public void noPressed() {
+  public void noPressed() {
   }
 }

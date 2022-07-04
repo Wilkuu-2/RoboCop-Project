@@ -18,6 +18,10 @@ Movie loadMovie(String path) {
   return new Movie(this, path);
 }
 
+SoundFile loadSoundFile(String path){
+  return new SoundFile(this,path);
+}
+
  public void loadQuestions() {
   long milliStart = millis();
   println("+----------[QLoad]-----------+");
@@ -51,17 +55,23 @@ Movie loadMovie(String path) {
 
 
  void setQuestion(Question q) {
+  if(state.isShortTimed(timer)){
+    resolveTarget("!shortTimeEv");
+  } else {
   currentQuestion = q;
   if (q!= null){
     arduino.interactibles[1] = q;
     if(q.useTimer){
-      timer = new Timer(round(1000*(15-0.2f*state.questionsAnswered-0.03f*pow(state.questionsAnswered,2))));
-    } else {
-    
+      timer = new Timer(round(1000*max(3,(10-1f*state.questionsAnswered+10f*pow(2,-state.questionsAnswered))))); // timer algo
+    } else { 
+      timer = null; 
     }
     currentDisplayable = q;
+    q.wasSelected = true; 
+   }
   }
  }
+ 
  void setVideo(Video v) {
   v.start();
   arduino.interactibles[1] = v;
@@ -74,14 +84,22 @@ Movie loadMovie(String path) {
 }
 
  void resolveTarget(String name) {
+  if(currentDisplayable instanceof Video){
+    ((Video) currentDisplayable).breakLoop();
+  }
+  
   if (name.charAt(0) == '?') {
     println("[SWITCH] Redirected to pool -> " + name);
     questionPools.get(name).useRandomOrEnd();
   } else if (name.charAt(0) == '!') {
     println("[SWITCH] Switched to video -> " + name);
-    setVideo(videos.get(name));
+    var vid = videos.get(name);
+    assert vid != null : "[SWITCH] Video: "+ name + " does not exist."; 
+    setVideo(vid);
   } else {
     println("[SWITCH] Switched to question -> " + name);
-    setQuestion(looseQuestions.get(name));
+    var q = looseQuestions.get(name);
+    assert q != null : "[SWITCH] Video: "+ name + " does not exist."; 
+    setQuestion(q);
   }
 }

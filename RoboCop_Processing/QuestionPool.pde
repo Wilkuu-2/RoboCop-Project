@@ -41,15 +41,19 @@ class QuestionPool extends ArrayList<Question> {
                                           stream()
                                           .filter(q -> !q.wasSelected)
                                           .collect(Collectors.toList()));
-                                          
+      if(availQuestions.size() < 1)
+        throw new IndexOutOfBoundsException();
+
       setQuestion(availQuestions.remove(
                                    round(
                                      random(0, 
                                         availQuestions.size() -1))));
+      currentQuestion.onPoolSwitchOn(name);
       used ++;
     }
     
     catch(IndexOutOfBoundsException e) {
+      System.out.printf("[SWITCH][POOL] %s has been depleted.\n", name); 
       resolveTarget(end);
     }
   }

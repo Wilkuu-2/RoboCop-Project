@@ -24,14 +24,41 @@
 			"vidPath" : "alarm2.mp4",
 			"loop" : false,
 			"next": "timeUpQ" ,
-			"duration": 3.0
+			"duration": 3.0,
+			"soundPath" : "sample.mp3",
+			"soundLoop" : true,
+			"soundDuration" : 5.0
+		},
+		{
+			"name" : "!shortTimeEv",
+			"vidPath" : "alarm2.mp4",
+			"loop" : false,
+			"next": "rickRollQ",
+			"duration": 3.0,
+			"soundPath" : "sample.mp3",
+			"soundLoop" : true,
+			"soundDuration" : 2.0
+		},
+		{
+			
+			"name" : "!rickRoll",
+			"vidPath" : "rickDisplay.mp4",
+			"loop" : false,
+			"next": "?pool1",
+			"duration": 8.0,
+			"soundPath" : "rickClip.mp3",
+			"soundLoop" : false,
+			"soundDuration" : 8.0
 		},
 		{
 			"name" : "!endCorrupt",
 			"vidPath" : "cursedID.mp4",
 			"loop" : true,
-			"next" : " "
-		}
+			"next" : " ",
+			"soundPath" : "sample2.mp3",
+			"soundLoop" : true,
+			"soundDuration" : 29.0
+		} 
 		
 	],
 	
@@ -68,6 +95,30 @@
 				"scoreMax" : 0,
 				"next"  : "!endCorrupt"
 			}
+		},
+		{
+			"name": "rickRollQ",
+			"imgPath" : "rickRollQ.png",
+			"timer"   : false,
+			"yes" : 
+			{
+				"scoreMin" : -10,
+				"scoreMax" : -10, 
+				"next"  : "!rickRoll",
+				"vars" : [
+					{
+						"name" : "hasBeenRickrolled",
+						"value" : true
+					}
+
+				]
+				
+			},
+			"no" : {
+				"scoreMin" : 0,
+				"scoreMax" : 0,
+				"next"  : "!endCorrupt"
+			}
 		}
 	],
 	"pools" : [
@@ -75,7 +126,7 @@
 		{
 			"name": "?pool1",
 			"end": "?pool2",
-			"max": 5,
+			"max": 8,
 			"questions": [
 				{
 					"name": "first1",
@@ -267,7 +318,97 @@
 						"next": "?pool1"
 					}
 					
+				},
+				{
+					"name": "third1",
+					"imgPath": "third/1.png",
+					"yes": 
+					{
+						"scoreMin": -1,
+						"scoreMax": -5,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -5,
+						"scoreMax": -10,
+						"next": "?pool1"
+					}
+					
 				}
+				,
+				{
+					"name": "third3",
+					"imgPath": "third/3.png",
+					"yes": 
+					{
+						"scoreMin": 10,
+						"scoreMax": 15,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "fourth2",
+					"imgPath": "fourth/2.png",
+					"yes": 
+					{
+						"scoreMin": 35,
+						"scoreMax": 40,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "fourth4",
+					"imgPath": "fourth/4.png",
+					"yes": 
+					{
+						"scoreMin": -20,
+						"scoreMax": -15,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": 25,
+						"scoreMax": 30,
+						"next": "?pool1"
+					}
+					
+				}
+				,
+				{
+					"name": "fourth5",
+					"imgPath": "fourth/5.png",
+					"yes": 
+					{
+						"scoreMin": 1,
+						"scoreMax": 5,
+						"next": "?pool1"
+					},
+					"no": 
+					{
+						"scoreMin": -1,
+						"scoreMax": -5,
+						"next": "?pool1"
+					}
+					
+				}
+				
 				
 			]
 			
@@ -275,7 +416,7 @@
 		{
 			"name": "?pool2",
 			"end": "?pool3",
-			"max": 5,
+			"max": 6,
 			"questions": [
 				{
 					"name": "first7",
@@ -431,7 +572,104 @@
 						"next": "?pool2"
 					}
 					
+				},
+				{
+					"name": "third6",
+					"imgPath": "third/6.png",
+					"yes": 
+					{
+						"scoreMin": 25,
+						"scoreMax": 30,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": -25,
+						"scoreMax": -30,
+						"next": "?pool2"
+					}
+					
 				}
+				,
+				{
+					"name": "third8",
+					"imgPath": "third/8.png",
+					"yes": 
+					{
+						"scoreMin": -25,
+						"scoreMax": -30,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 25,
+						"scoreMax": 30,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "third9",
+					"imgPath": "third/9.png",
+					"yes": 
+					{
+						"scoreMin": -25,
+						"scoreMax": -30,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": 25,
+						"scoreMax": 30,
+						"next": "?pool2",
+						"vars": [
+							{
+								"name": "isPessimistic",
+								"value": false
+							}
+
+						]
+					}
+					
+				}
+				,
+				{
+					"name": "fourth8",
+					"imgPath": "fourth/8.png",
+					"yes": 
+					{
+						"scoreMin": 15,
+						"scoreMax": 20,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": -30,
+						"scoreMax": -35,
+						"next": "?pool2"
+					}
+					
+				}
+				,
+				{
+					"name": "fourth9",
+					"imgPath": "fourth/9.png",
+					"yes": 
+					{
+						"scoreMin": 20,
+						"scoreMax": 20,
+						"next": "?pool2"
+					},
+					"no": 
+					{
+						"scoreMin": -10,
+						"scoreMax": -15,
+						"next": "?pool2"
+					}
+					
+				}
+				
 				
 			]
 			
@@ -583,13 +821,86 @@
 						"next": "?pool3"
 					}
 					
-				}
+					},
+					{
+						"name": "third12",
+						"imgPath": "third/12.png",
+						"yes": 
+						{
+							"scoreMin": -70,
+							"scoreMax": -80,
+							"next": "?pool3"
+						},
+						"no": 
+						{
+							"scoreMin": 10,
+							"scoreMax": 20,
+							"next": "?pool3"
+						}
+						
+					}
+					,
+					{
+						"name": "third15",
+						"imgPath": "third/15.png",
+						"yes": 
+						{
+							"scoreMin": 50,
+							"scoreMax": 100,
+							"next": "?pool3"
+						},
+						"no": 
+						{
+							"scoreMin": -10,
+							"scoreMax": -30,
+							"next": "?pool3"
+						}
+						
+					}
+					,
+					{
+						"name": "fourth11",
+						"imgPath": "fourth/11.png",
+						"yes": 
+						{
+							"scoreMin": 10,
+							"scoreMax": 15,
+							"next": "?pool3"
+						},
+						"no": 
+						{
+							"scoreMin": -30,
+							"scoreMax": -40,
+							"next": "?pool3"
+						}
+						
+					}
+					,
+					{
+						"name": "fourth14",
+						"imgPath": "fourth/14.png",
+						"yes": 
+						{
+							"scoreMin": -60,
+							"scoreMax": -70,
+							"next": "?pool3"
+						},
+						"no": 
+						{
+							"scoreMin": 30,
+							"scoreMax": 45,
+							"next": "?pool3"
+						}
+						
+					}
+					
+					
+				]
 				
-			]
+			}
 			
-		}
-		
-		
-		
-	]
-}
+			
+			
+		]
+	}
+	

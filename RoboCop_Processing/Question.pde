@@ -2,8 +2,8 @@ class Question implements Displayable, Interactible{
   JSONObject qObj;
   String name;
   PImage img; 
-  boolean useTimer = true; 
-  boolean wasSelected = false;
+  boolean useTimer = true;
+  boolean wasSelected = false;  
   String yesNext;
   String noNext;
   
@@ -29,7 +29,7 @@ class Question implements Displayable, Interactible{
     noNext = answerObj.getString("next");
     assert noNext != null   : "[QLOAD][ERROR]<" +name+ ">: No target for \"no\"";
     
-     System.out.printf("|%-20s| %-20s | %-20s |\n", name, yesNext, noNext);
+    System.out.printf("|%-20s| %-20s | %-20s |\n", name, yesNext, noNext);
     
     try {
       useTimer = obj.getBoolean("timer");
@@ -40,6 +40,11 @@ class Question implements Displayable, Interactible{
     
     
   }
+
+   public void onPoolSwitchOn(String poolName){
+      System.out.printf("[QLOAD] %-10s ->> %-10s\n", poolName, name);
+
+   }
   
    public void display(){
     image(img, 0, 0, size.x, size.y);
