@@ -9,7 +9,7 @@ class Arduino {
   static final int    messageLen  = 6;
   static final String pollMessageTemplate = "PNNN%1d\n";
   static final long   waitMs      = 1;
-  static final long   dropMs      = 13;
+  static final long   dropMs      = 40;
 
   Serial port;
 
@@ -48,6 +48,7 @@ class Arduino {
                                 started ? ledLevel : 9));
       dbgPrint(String.format(pollMessageTemplate,
                                 started ? ledLevel : 9));
+      var dropTime = millis() + dropMs;
       // Wait for the message to be sent in
       do {
         try {
@@ -58,11 +59,31 @@ class Arduino {
           assert false; 
           break;
         }
+        if(millis() > dropTime ){
+          dbgPrintln("dropped");
+          return;
+        }
+        
       } while (port.available() < messageLen);
 
-      portOutput = port.readString();
+      portOutput += port.readString();
+      
       dbgPrint(portOutput);
-
+      
+      var firstAInd = portOutput.indexOf('A');
+      dbgPrintln("First A: " + firstAInd);
+      dbgPrintln("length: " + portOutput.length());
+      
+      if(portOutput.length() < firstAInd + messageLen - 1){
+        dbgPrintln("incomplete message, returning");
+        return;
+      }
+      
+      portOutput = portOutput.substring(firstAInd,firstAInd + messageLen);
+      
+      dbgPrint(portOutput);
+      
+          dbgPrintln("length: " + portOutput.length());
       assert portOutput.charAt(0) == 'A' && portOutput.charAt(5) == '\n' :
       "Invalid message recieved"; // A hard attemt to avoid errors, pretty extreme, maybe drop instead?
 

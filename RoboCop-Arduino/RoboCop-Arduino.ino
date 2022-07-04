@@ -58,10 +58,12 @@ void loop() {
     sprintf(message, "A%c%c%c%c\n", start, yes, no, led); //https://www.cplusplus.com/reference/cstdio/sprintf/
     Serial.print(message); //If only serial had some sort of printf functionality instead of me having to use sprintf on a buffer
     Serial.flush();        //Making sure the message is sent
-  } else if (pLedStatus != ledStatus) { // LED segment selector 
+  } else if (pLedStatus != ledStatus) { // LED segment selector
     switch (ledStatus) {
       case (0):
-        FastLED.showColor(CRGB::Black);
+        for (int i = 0; i < NUM_LEDS; i++) {
+          leds[i] = CRGB::Black;
+        }
         break;
       case (1):
         for (int i = 32; i < 48; i++) {
@@ -112,12 +114,16 @@ void loop() {
     FastLED.show();
   } else if (ledStatus == 9 && millis() > millisSwitch) { // A system to flicker when the installation is idle
     flicker = !flicker;
-    
+
     if (flicker) {
-      FastLED.showColor(CRGB::Red); // All on
-      
+      for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = CRGB::Black;
+      }
+
     } else {
-      FastLED.showColor(CRGB::Black);
+      for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = CRGB::Red;
+      }
     }
 
     FastLED.show();

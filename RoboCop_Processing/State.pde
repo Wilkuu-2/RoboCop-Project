@@ -14,7 +14,7 @@ class State implements Interactible {
   // Rickroll event
   boolean hasBeenRickrolled = false;
   int     shortTimers      = 0;
-  final static int maxShortTimers = 4;
+  final static int maxShortTimers = 3;
   final static float shortTimerFraction = 0.06f;
 
 
