@@ -24,6 +24,12 @@ bool flicker;
 long millisSwitch = 0;
 const long flickerDelay = 800;
 
+inline void setLedSegments(int start, int last) {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = i >= start && i <= last ? CRGB::Red : CRGB::Black;
+  }
+}
+
 // -- Entry
 void setup() {
 
@@ -34,6 +40,7 @@ void setup() {
   pinMode(  ledPin, OUTPUT);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS); // Start up neopixels
 }
+
 
 char in[6];
 
@@ -66,53 +73,42 @@ void loop() {
         }
         break;
       case (1):
-        for (int i = 32; i < 48; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(32, 47);
         break;
       case (2):
-        for (int i = 24; i < 32; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(24, 31);
         break;
       case (3):
-        for (int i = 48; i < 56; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(48, 55);
         break;
       case (4):
-        for (int i = 16; i < 24; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(16, 23);
         break;
       case (5):
-        for (int i = 56; i < 64; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(56, 63);
         break;
       case (6):
-        for (int i = 8; i < 16; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(8, 15);
         break;
       case (7):
-        for (int i = 64; i < 72; i++) {
-          leds[i] = CRGB::Red;
-        }
+        setLedSegments(64, 71);
         break;
       case (8):
-        for (int i = 0; i < 8; i++) {
-          leds[i] = CRGB::Red;
-        }
-        for (int y = 72; y < 80; y++) {
-          leds[y] = CRGB::Red;
+        for (int y = 0; y < NUM_LEDS; y++) {
+          leds[y] = ((y < 8) || (y >= 72 && y < 80)) ? CRGB::Red : CRGB::Black;
         }
         break;
+      case(9):
+        for (int i = 0; i < NUM_LEDS; i++) {
+          leds[i] = CRGB::Red;
+        }
+      break;
+      
       default:;
     }
     pLedStatus = ledStatus;
     FastLED.show();
-  } else if (ledStatus == 9 && millis() > millisSwitch) { // A system to flicker when the installation is idle
+  } else if (false && ledStatus == 9 && millis() > millisSwitch) { // A system to flicker when the installation is idle
     flicker = !flicker;
 
     if (flicker) {
@@ -125,7 +121,6 @@ void loop() {
         leds[i] = CRGB::Red;
       }
     }
-
     FastLED.show();
     millisSwitch = millis() + flickerDelay; // Reset timer
   }
