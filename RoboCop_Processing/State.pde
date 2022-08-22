@@ -72,7 +72,7 @@ class State implements Interactible {
     float nMax = max(inMin, inMax);
     int scoreAdd = round(random(nMin, nMax));
     // score = max(0, min(1000, score + scoreAdd));
-    score += scoreAdd;
+    score += max(min(scoreAdd,1000), 0 );
     System.out.printf("[SCORE]: score: %05d (%+4d)\n", score, scoreAdd);
   }
 
