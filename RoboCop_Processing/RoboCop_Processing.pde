@@ -34,7 +34,7 @@ void setup() {
 
   loadVideos();
 
-  arduino = new Arduino(this, 0, true, 9600);
+  arduino = new Arduino(this, 0, false, 9600);
 
   state = new State();
   arduino.interactibles[0] = state;
