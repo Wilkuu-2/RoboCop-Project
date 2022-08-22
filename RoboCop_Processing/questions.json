@@ -151,14 +151,14 @@
 					"imgPath": "first/2.png",
 					"yes": 
 					{
-						"scoreMin": 20,
-						"scoreMax": 20,
+						"scoreMin": 50,
+						"scoreMax": 70,
 						"next": "?pool1"
 					},
 					"no": 
 					{
-						"scoreMin": 30,
-						"scoreMax": 30,
+						"scoreMin": 60,
+						"scoreMax": 90,
 						"next": "?pool1",
 						"vars" : [
 							{
@@ -175,14 +175,14 @@
 					"imgPath": "first/3.png",
 					"yes": 
 					{
-						"scoreMin": 10,
-						"scoreMax": 15,
+						"scoreMin": 40,
+						"scoreMax": 55,
 						"next": "?pool1"
 					},
 					"no": 
 					{
-						"scoreMin": -10,
-						"scoreMax": -15,
+						"scoreMin": -20,
+						"scoreMax": -25,
 						"next": "?pool1"
 					}
 					
@@ -199,8 +199,8 @@
 					},
 					"no": 
 					{
-						"scoreMin": -35,
-						"scoreMax": -40,
+						"scoreMin": -10,
+						"scoreMax": -20,
 						"next": "?pool1"
 					}
 					
@@ -217,8 +217,8 @@
 					},
 					"no": 
 					{
-						"scoreMin": 10,
-						"scoreMax": 10,
+						"scoreMin": 20,
+						"scoreMax": 20,
 						"next": "?pool1"
 					}
 					
@@ -235,8 +235,8 @@
 					},
 					"no": 
 					{
-						"scoreMin": 5,
-						"scoreMax": 15,
+						"scoreMin": 10,
+						"scoreMax": 20,
 						"next": "?pool1"
 					}
 					
@@ -278,7 +278,7 @@
 					"no": 
 					{
 						"scoreMin": 10,
-						"scoreMax": 15,
+						"scoreMax": 60,
 						"next": "?pool1"
 					}
 					
@@ -483,14 +483,14 @@
 					"imgPath": "second/6.png",
 					"yes": 
 					{
-						"scoreMin": -10,
-						"scoreMax": -15,
+						"scoreMin": -20,
+						"scoreMax": -30,
 						"next": "?pool2"
 					},
 					"no": 
 					{
-						"scoreMin": 15,
-						"scoreMax": 15,
+						"scoreMin": 40,
+						"scoreMax": 50,
 						"next": "?pool2"
 					}
 					
@@ -501,14 +501,14 @@
 					"imgPath": "second/7.png",
 					"yes": 
 					{
-						"scoreMin": 20,
-						"scoreMax": 20,
+						"scoreMin": 30,
+						"scoreMax": 40,
 						"next": "?pool2"
 					},
 					"no": 
 					{
-						"scoreMin": -10,
-						"scoreMax": -15,
+						"scoreMin": -12,
+						"scoreMax": -16,
 						"next": "?pool2"
 					}
 					
@@ -526,7 +526,7 @@
 					"no": 
 					{
 						"scoreMin": -35,
-						"scoreMax": 40,
+						"scoreMax": -40,
 						"next": "?pool2"
 					}
 					
@@ -555,12 +555,12 @@
 					"imgPath": "second/10.png",
 					"yes": 
 					{
-						"scoreMin": -10,
-						"scoreMax": -15,
+						"scoreMin": -30,
+						"scoreMax": -40,
 						"next": "?pool2",
 						"vars" : [
 							{
-								"name": "isEmpathetic",
+								"name": "isBrave",
 								"value" : true 
 							}
 						]
@@ -578,14 +578,14 @@
 					"imgPath": "third/6.png",
 					"yes": 
 					{
-						"scoreMin": 25,
-						"scoreMax": 30,
+						"scoreMin": 40,
+						"scoreMax": 50,
 						"next": "?pool2"
 					},
 					"no": 
 					{
-						"scoreMin": -25,
-						"scoreMax": -30,
+						"scoreMin": -10,
+						"scoreMax": -20,
 						"next": "?pool2"
 					}
 					
@@ -596,14 +596,14 @@
 					"imgPath": "third/8.png",
 					"yes": 
 					{
-						"scoreMin": -25,
-						"scoreMax": -30,
+						"scoreMin": -40,
+						"scoreMax": -50,
 						"next": "?pool2"
 					},
 					"no": 
 					{
-						"scoreMin": 25,
-						"scoreMax": 30,
+						"scoreMin": 10,
+						"scoreMax": 20,
 						"next": "?pool2"
 					}
 					
@@ -663,8 +663,8 @@
 					},
 					"no": 
 					{
-						"scoreMin": -10,
-						"scoreMax": -15,
+						"scoreMin": -20,
+						"scoreMax": -30,
 						"next": "?pool2"
 					}
 					
@@ -684,14 +684,14 @@
 					"imgPath": "first/11.png",
 					"yes": 
 					{
-						"scoreMin": -5,
-						"scoreMax": -10,
+						"scoreMin": -15,
+						"scoreMax": -25,
 						"next": "?pool3"
 					},
 					"no": 
 					{
 						"scoreMin": 5,
-						"scoreMax": 10,
+						"scoreMax": 30,
 						"next": "?pool3"
 					}
 					
@@ -703,13 +703,13 @@
 					"yes": 
 					{
 						"scoreMin": -20,
-						"scoreMax": -25,
+						"scoreMax": -40,
 						"next": "?pool3"
 					},
 					"no": 
 					{
 						"scoreMin": 20,
-						"scoreMax": 25,
+						"scoreMax": 50,
 						"next": "?pool3"
 					}
 					
@@ -757,13 +757,13 @@
 					"yes": 
 					{
 						"scoreMin": -5,
-						"scoreMax": -5,
+						"scoreMax": -25,
 						"next": "?pool3"
 					},
 					"no": 
 					{
-						"scoreMin": 5,
-						"scoreMax": 5,
+						"scoreMin": 10,
+						"scoreMax": 15,
 						"next": "?pool3"
 					}
 					
@@ -863,8 +863,8 @@
 						"imgPath": "fourth/11.png",
 						"yes": 
 						{
-							"scoreMin": 10,
-							"scoreMax": 15,
+							"scoreMin": 100,
+							"scoreMax": 110,
 							"next": "?pool3"
 						},
 						"no": 
