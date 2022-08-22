@@ -11,6 +11,8 @@ class IDCard extends Video {
   String date;
   String occupation;
   int infoNum = 0;
+  long endTimerMillis = 0;
+  long endTimerDuration = 1000 * 60; 
 
   // Fonts
   PFont font;
@@ -55,6 +57,9 @@ class IDCard extends Video {
   public void passState(State s) {
     randomize();
     score = s.score;
+    endTimerMillis = millis() + endTimerDuration; 
+    
+    
 
     // Get occupation
     if (round(random(0, 3)) == 1) {
@@ -125,6 +130,10 @@ class IDCard extends Video {
 
   @Override public
     void display2() {
+      
+    if(endTimerMillis < millis()){
+      reset();
+    }
     pushMatrix();
     translate(90, 70);
 
