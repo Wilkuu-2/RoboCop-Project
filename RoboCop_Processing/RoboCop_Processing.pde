@@ -8,7 +8,7 @@ Arduino arduino;
 Timer timer;
 
 // New globals
-String dataPath; = "/store/Study/RoboCop-Project/Suzys_BaseSketch/data/";
+String dataPath;
 final static String questionJSONpath = "./questions.json";
 static final int camInd = 0;
 
