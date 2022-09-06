@@ -8,7 +8,7 @@ Arduino arduino;
 Timer timer;
 
 // New globals
-final static String dataPath = "/store/Study/RoboCop-Project/Suzys_BaseSketch/data/";
+String dataPath; = "/store/Study/RoboCop-Project/Suzys_BaseSketch/data/";
 final static String questionJSONpath = "./questions.json";
 static final int camInd = 0;
 
@@ -27,6 +27,9 @@ State state;
 void setup() {
   //size(900, 900);
   fullScreen(1);
+
+  dataPath = sketchPath() + "/data/"; 
+
   Displayable.size.x = width;
   Displayable.size.y = height;
 
