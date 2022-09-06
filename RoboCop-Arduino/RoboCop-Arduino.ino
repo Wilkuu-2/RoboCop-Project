@@ -8,6 +8,10 @@
 */
 
 #include <FastLED.h>
+
+#define LEDSUPP 1 // Enable and disable led support 
+// #define FLICKER 1 // Enable flickering 
+
 #define NUM_LEDS 80
 #define DATA_PIN 9
 
@@ -15,10 +19,14 @@
 const int startBtn = 10;
 const int yesBtn = 11;
 const int noBtn = 12;
-const int ledPin =  9;
-CRGB leds[NUM_LEDS];
+
 int ledStatus = 9;
 int pLedStatus = 0;
+
+#ifdef LEDSUPP 
+const int ledPin =  9;
+CRGB leds[NUM_LEDS];
+
 
 bool flicker;
 long millisSwitch = 0;
@@ -29,6 +37,7 @@ inline void setLedSegments(int start, int last) {
     leds[i] = i >= start && i <= last ? CRGB::Red : CRGB::Black;
   }
 }
+#endif 
 
 // -- Entry
 void setup() {
@@ -37,8 +46,10 @@ void setup() {
   pinMode(startBtn, INPUT);
   pinMode(  yesBtn, INPUT);
   pinMode(   noBtn, INPUT);
-  pinMode(  ledPin, OUTPUT);
+  #ifdef LEDSUPP
+  pinMode(  ledPin, OUTPUT); 
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS); // Start up neopixels
+  #endif
 }
 
 
@@ -65,7 +76,9 @@ void loop() {
     sprintf(message, "A%c%c%c%c\n", start, yes, no, led); //https://www.cplusplus.com/reference/cstdio/sprintf/
     Serial.print(message); //If only serial had some sort of printf functionality instead of me having to use sprintf on a buffer
     Serial.flush();        //Making sure the message is sent
-  } else if (pLedStatus != ledStatus) { // LED segment selector
+  } 
+  #ifdef LEDSUPP 
+    else if (pLedStatus != ledStatus) { // LED segment selector
     switch (ledStatus) {
       case (0):
         for (int i = 0; i < NUM_LEDS; i++) {
@@ -98,17 +111,20 @@ void loop() {
           leds[y] = ((y < 8) || (y >= 72 && y < 80)) ? CRGB::Red : CRGB::Black;
         }
         break;
+      #ifndef FLICKER 
       case(9):
         for (int i = 0; i < NUM_LEDS; i++) {
           leds[i] = CRGB::Red;
-        }
-      break;
-      
+          }
+         break;
+      #endif 
       default:;
     }
     pLedStatus = ledStatus;
     FastLED.show();
-  } else if (false && ledStatus == 9 && millis() > millisSwitch) { // A system to flicker when the installation is idle
+  } 
+  #ifdef FLICKER  
+    else if (ledStatus == 9 && millis() > millisSwitch) { // A system to flicker when the installation is idle
     flicker = !flicker;
 
     if (flicker) {
@@ -121,7 +137,9 @@ void loop() {
         leds[i] = CRGB::Red;
       }
     }
-    FastLED.show();
     millisSwitch = millis() + flickerDelay; // Reset timer
+    FastLED.show();
   }
+  #endif 
+  #endif 
 }
