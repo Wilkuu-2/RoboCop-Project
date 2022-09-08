@@ -32,6 +32,7 @@
 		{
 			"name" : "!shortTimeEv",
 			"vidPath" : "alarm2.mp4",
+            "skippable" : true,  
 			"loop" : false,
 			"next": "rickRollQ",
 			"duration": 3.0,
@@ -44,6 +45,7 @@
 			"name" : "!rickRoll",
 			"vidPath" : "rickDisplay.mp4",
 			"loop" : false,
+            "skippable" : true,  
 			"next": "?pool1",
 			"duration": 8.0,
 			"soundPath" : "rickClip.mp3",

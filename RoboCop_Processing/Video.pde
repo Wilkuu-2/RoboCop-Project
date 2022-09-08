@@ -5,6 +5,7 @@ class Video extends DummyInteractible implements Displayable {
   JSONObject vObj;
   boolean loop = false;
   boolean soundLoop = false;
+  boolean skip = false;
   String next;
   String name;
   float duration;
@@ -12,13 +13,19 @@ class Video extends DummyInteractible implements Displayable {
   Movie mov;
   SoundFile sound;
 
-  Video(JSONObject obj) {
+  Video(JSONObject obj) throws RuntimeException {
     println("+----[VIDEO: INIT]---+");
     vObj = obj;
 
-    String path = dataPath + obj.getString("vidPath");
-    mov = loadMovie(path);
+    boolean skippable;
+    try {
+      skippable = obj.getBoolean("skippable");
+    }
+    catch(NullPointerException e) {
+      skippable = false;
+    }
 
+    String path = dataPath + obj.getString("vidPath");
     name = obj.getString("name");
     next = obj.getString("next");
   assert name != null :
@@ -27,6 +34,18 @@ class Video extends DummyInteractible implements Displayable {
     String.format("[VIDEO]<%s>: target missing!", name);
     debugPrintln("path: " + path);
     debugPrintln("next: " + next);
+
+
+    if (! new File(path).exists()) {
+    assert skippable :
+      "[VIDEO][ERROR] Non-skippable video file missing: " + name;
+      print("skipping");
+      mov.stop();
+      mov.dispose();
+      throw new RuntimeException("This video should be skipped");
+    }
+
+    mov = loadMovie(path);
 
 
     try {
@@ -48,10 +67,20 @@ class Video extends DummyInteractible implements Displayable {
     String soundPath = obj.getString("soundPath");
     if (soundPath != null) {
       debugPrintln("[Sound] loading:" + dataPath +  soundPath);
-      sound = loadSoundFile(dataPath + soundPath);
-    assert sound != null :
-      "[VIDEO][SOUND] loading sound: " + soundPath + " failed.";
 
+      if (! new File(dataPath + soundPath).exists()) {
+        assert skippable :
+        "[VIDEO][ERROR] Non-skippable audio file missing: " + name + "(" + dataPath + soundPath + ")";
+        print("skipping");
+        throw new RuntimeException("This video should be skipped");
+      }
+
+      sound = loadSoundFile(dataPath + soundPath);
+      if (sound == null) {
+        if (skippable) throw new RuntimeException("This video should be skipped: Missing audio");
+        else assert false :
+        "[VIDEO][SOUND] loading sound: " + soundPath + " failed.";
+      }
       try {
         soundLoop = obj.getBoolean("soundLoop");
       }

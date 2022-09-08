@@ -17,6 +17,7 @@ HashMap<String, Video>        videos;
 HashMap<String, QuestionPool> questionPools;
 HashMap<String, Question>     looseQuestions;
 
+boolean hasRickroll = false; 
 
 Question currentQuestion;
 Displayable currentDisplayable;
@@ -36,9 +37,9 @@ void setup() {
   qJSON = loadJSONObject(questionJSONpath);
 
   loadVideos();
+  hasRickroll = hasTarget("!rickRoll");
 
   arduino = new Arduino(this, 0, false, 9600);
-
   state = new State();
   arduino.interactibles[0] = state;
   loadQuestions();

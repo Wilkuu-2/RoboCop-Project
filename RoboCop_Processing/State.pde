@@ -9,9 +9,11 @@ class State implements Interactible {
   boolean isPessimistic = true;
   boolean pineApplePizza   = false;
   boolean isBrave          = false;
+  
 
 
   // Rickroll event
+  boolean rickrollEnabled = true; 
   boolean hasBeenRickrolled = false;
   int     shortTimers      = 0;
   final static int maxShortTimers = 3;
@@ -21,6 +23,8 @@ class State implements Interactible {
   State() {
     score = round(random(400, 550));
     questionsAnswered = 0; 
+    
+    rickrollEnabled = rickrollEnabled && hasRickroll;
     
       // Custom Vars
     isHuman = true;
@@ -57,7 +61,7 @@ class State implements Interactible {
     }
   }
   public boolean isShortTimed(Timer t) {
-    if (!hasBeenRickrolled &&t != null && t.getFractionalProgress() < shortTimerFraction)
+    if (rickrollEnabled && !hasBeenRickrolled &&t != null && t.getFractionalProgress() < shortTimerFraction)
       shortTimers++;
 
     if (shortTimers >= maxShortTimers) {

@@ -5,11 +5,15 @@ void loadVideos() {
   for (int i = 0; i < vids.size(); i++) {
     var vidObj = vids.getJSONObject(i);
     var vidName = vidObj.getString("name");
-
+    
     if (vidName.contains("!scoreBoard")) {
       videos.put(vidName, new IDCard(this,vidObj));     
     } else
+      try{
       videos.put(vidName, new Video(vidObj));
+      } catch(RuntimeException e) {
+        println("[VIDEO]: " + vidName + "skipped");
+      }
   }
 }
 
@@ -102,4 +106,15 @@ SoundFile loadSoundFile(String path){
     assert q != null : "[SWITCH] Video: "+ name + " does not exist."; 
     setQuestion(q);
   }
+}
+
+boolean hasTarget(String name){
+  if (name.charAt(0) == '?') {
+    return questionPools.get(name) != null; 
+  } else if (name.charAt(0) == '!') {
+    return  videos.get(name) != null; 
+  } else {
+    return looseQuestions.get(name) != null;
+  }
+
 }
